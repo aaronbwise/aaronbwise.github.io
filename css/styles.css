@@ -11753,7 +11753,7 @@ p.lead {
   text-transform: uppercase;
   font-weight: 500;
   font-size: 1.5rem;
-  color: var(--primary-color);
+  color: var(--strong-blue);
 }
 
 #sideNav {
