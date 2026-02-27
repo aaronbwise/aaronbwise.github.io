@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Lucide icons
-    lucide.createIcons();
+    // Initialize Lucide icons (non-blocking)
+    try { lucide.createIcons(); } catch (e) { /* CDN may be unavailable */ }
 
     // --- Mobile nav toggle ---
     const toggle = document.querySelector('.nav-toggle');
@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Intersection Observer: fade-in sections ---
+    // Add fade-in class via JS so content is visible if JS fails
+    document.querySelectorAll('section:not(.hero)').forEach(s => s.classList.add('fade-in'));
+
     const fadeObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -47,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('section:not(.hero)').forEach(s => fadeObserver.observe(s));
+    document.querySelectorAll('section.fade-in').forEach(s => fadeObserver.observe(s));
 
     // --- Intersection Observer: active nav link ---
     const sections = document.querySelectorAll('section[id]');
